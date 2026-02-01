@@ -25,11 +25,12 @@
 
     .container {
       background: white;
-      padding: 30px 25px;
+      padding: 30px 25px 40px;
       border-radius: 22px;
       text-align: center;
       box-shadow: 0 15px 40px rgba(0,0,0,0.12);
       max-width: 350px;
+      width: 90%;
     }
 
     img {
@@ -39,12 +40,14 @@
 
     h1 {
       font-size: 22px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .buttons {
       position: relative;
-      height: 120px;
+      height: 140px;
+      width: 100%;
+      overflow: hidden; /* IMPORTANT FIX */
     }
 
     button {
@@ -55,27 +58,30 @@
       cursor: pointer;
       transition: all 0.3s ease;
       position: absolute;
+      white-space: nowrap;
     }
 
     #yesBtn {
       background: #ff4d6d;
       color: white;
-      left: 20%;
-      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 10px;
+      z-index: 2;
     }
 
     #noBtn {
       background: #adb5bd;
       color: white;
-      right: 20%;
-      bottom: 0;
+      left: 10%;
+      bottom: 60px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container" id="main">
+  <div class="container">
     <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="cute">
 
     <h1>Will you be my Valentine? 💘</h1>
@@ -89,6 +95,7 @@
   <script>
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
+    const buttonBox = document.querySelector(".buttons");
 
     let yesSize = 18;
     let noMessages = [
@@ -104,22 +111,25 @@
 
     let noCount = 0;
 
-    noBtn.addEventListener("mouseover", moveNo);
-    noBtn.addEventListener("click", moveNo);
-
     function moveNo() {
-      const x = Math.random() * 70;
-      const y = Math.random() * 70;
+      const boxWidth = buttonBox.clientWidth - noBtn.offsetWidth;
+      const boxHeight = buttonBox.clientHeight - noBtn.offsetHeight;
 
-      noBtn.style.left = x + "%";
-      noBtn.style.top = y + "%";
+      const x = Math.random() * boxWidth;
+      const y = Math.random() * boxHeight;
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
 
       noBtn.textContent = noMessages[noCount % noMessages.length];
       noCount++;
 
-      yesSize += 10;
+      yesSize += 8;
       yesBtn.style.fontSize = yesSize + "px";
     }
+
+    noBtn.addEventListener("mouseover", moveNo);
+    noBtn.addEventListener("click", moveNo);
 
     yesBtn.addEventListener("click", () => {
       document.body.innerHTML = `
@@ -135,8 +145,8 @@
           <div>
             <h1>YAYYYYY 😍💖</h1>
             <p style="font-size:18px">
-              Congratulations 🎉<br>
-              You just made me the happiest person alive 😌
+              You chose correctly 😌<br>
+              Valentine secured 💘
             </p>
             <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="260">
           </div>
@@ -147,3 +157,4 @@
 
 </body>
 </html>
+
