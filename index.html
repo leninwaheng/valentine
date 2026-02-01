@@ -25,12 +25,11 @@
 
     .container {
       background: white;
-      padding: 30px 25px 35px;
+      padding: 30px 25px;
       border-radius: 22px;
       text-align: center;
       box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-      max-width: 360px;
-      width: 92%;
+      max-width: 350px;
     }
 
     img {
@@ -40,16 +39,12 @@
 
     h1 {
       font-size: 22px;
-      margin-bottom: 18px;
+      margin-bottom: 25px;
     }
 
-    /* BUTTON ZONE */
     .buttons {
       position: relative;
-      height: 200px; /* more space */
-      width: 100%;
-      margin-top: 10px;
-      overflow: hidden;
+      height: 120px;
     }
 
     button {
@@ -58,50 +53,42 @@
       padding: 14px 28px;
       font-size: 18px;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
       position: absolute;
-      white-space: nowrap;
     }
 
-    /* YES stays centered and grows */
     #yesBtn {
       background: #ff4d6d;
       color: white;
-      left: 50%;
-      bottom: 10px;
-      transform: translateX(-50%);
-      z-index: 2;
+      left: 20%;
+      bottom: 0;
     }
 
-    /* NO gets its own roaming area */
     #noBtn {
       background: #adb5bd;
       color: white;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1;
+      right: 20%;
+      bottom: 0;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <div class="container" id="main">
     <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="cute">
 
     <h1>Will you be my Valentine? 💘</h1>
 
     <div class="buttons">
-      <button id="noBtn">No 😒</button>
       <button id="yesBtn">Yes 💕</button>
+      <button id="noBtn">No 😒</button>
     </div>
   </div>
 
   <script>
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
-    const box = document.querySelector(".buttons");
 
     let yesSize = 18;
     let noMessages = [
@@ -109,34 +96,30 @@
       "Think again 😏",
       "Wrong button 😌",
       "This button is broken",
-      "Nice try 😭",
+      "Why are you like this 😭",
       "Just click yes already",
-      "You know you want to 😌",
-      "Final warning ⚠️"
+      "Stop fighting destiny 😌",
+      "Last warning ⚠️"
     ];
-    let count = 0;
 
-    function moveNo() {
-      const maxX = box.clientWidth - noBtn.offsetWidth;
-      const maxY = box.clientHeight - noBtn.offsetHeight - 80; // avoid YES area
-
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-      noBtn.style.transform = "none";
-
-      noBtn.textContent = noMessages[count % noMessages.length];
-      count++;
-
-      yesSize += 6;
-      yesBtn.style.fontSize = yesSize + "px";
-      yesBtn.style.padding = `${14 + count}px ${28 + count * 2}px`;
-    }
+    let noCount = 0;
 
     noBtn.addEventListener("mouseover", moveNo);
     noBtn.addEventListener("click", moveNo);
+
+    function moveNo() {
+      const x = Math.random() * 70;
+      const y = Math.random() * 70;
+
+      noBtn.style.left = x + "%";
+      noBtn.style.top = y + "%";
+
+      noBtn.textContent = noMessages[noCount % noMessages.length];
+      noCount++;
+
+      yesSize += 10;
+      yesBtn.style.fontSize = yesSize + "px";
+    }
 
     yesBtn.addEventListener("click", () => {
       document.body.innerHTML = `
@@ -150,10 +133,10 @@
           background:linear-gradient(135deg,#ffd6e0,#ffeef2);
         ">
           <div>
-            <h1>YAYYYY 😍💖</h1>
+            <h1>YAYYYYY 😍💖</h1>
             <p style="font-size:18px">
-              You chose wisely 😌<br>
-              Valentine officially secured 💘
+              Congratulations 🎉<br>
+              You just made me the happiest person alive 😌
             </p>
             <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="260">
           </div>
@@ -164,4 +147,3 @@
 
 </body>
 </html>
-
