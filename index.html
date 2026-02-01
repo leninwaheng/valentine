@@ -8,9 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -66,6 +64,7 @@
       white-space: nowrap;
     }
 
+    /* YES ON TOP */
     #yesBtn {
       background: #ff4d6d;
       color: white;
@@ -76,6 +75,7 @@
       transition: transform 0.25s ease;
     }
 
+    /* NO BELOW */
     #noBtn {
       background: #adb5bd;
       color: white;
@@ -85,7 +85,7 @@
       z-index: 1;
     }
 
-    /* 💕 Falling hearts */
+    /* Falling hearts */
     .heart {
       position: fixed;
       top: -20px;
@@ -109,7 +109,7 @@
   <div class="container" id="card">
     <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="cute">
 
-    <h1>Will you be my Valentine? 💘</h1>
+    <h1 id="question"></h1>
 
     <div class="buttons">
       <button id="yesBtn">Yes 💕</button>
@@ -118,9 +118,15 @@
   </div>
 
   <script>
+    /* 💖 HER NAME */
+    const herName = "Shaina";
+
+    const question = document.getElementById("question");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const box = document.querySelector(".buttons");
+
+    question.textContent = `Will you be my Valentine, ${herName}? 💘`;
 
     let scale = 1;
     let count = 0;
@@ -157,27 +163,21 @@
     noBtn.addEventListener("mouseover", moveNo);
     noBtn.addEventListener("click", moveNo);
 
-    // 💖 Create falling hearts
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
       heart.textContent = "💖";
-
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = 2 + Math.random() * 3 + "s";
-
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 5000);
     }
 
     yesBtn.addEventListener("click", () => {
       document.getElementById("card").style.display = "none";
 
-      // Start hearts rain
-      const heartInterval = setInterval(createHeart, 200);
-
-      setTimeout(() => clearInterval(heartInterval), 5000);
+      const rain = setInterval(createHeart, 200);
+      setTimeout(() => clearInterval(rain), 5000);
 
       setTimeout(() => {
         document.body.innerHTML += `
@@ -194,7 +194,7 @@
             <div>
               <h1>YAYYYYY 😍💖</h1>
               <p style="font-size:18px">
-                Valentine officially secured 💘
+                ${herName}, you’re officially my Valentine 💘
               </p>
             </div>
           </div>
@@ -205,6 +205,7 @@
 
 </body>
 </html>
+
 
 
 
