@@ -31,6 +31,7 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.12);
       max-width: 360px;
       width: 92%;
+      z-index: 2;
     }
 
     img {
@@ -58,7 +59,6 @@
       font-weight: 600;
       cursor: pointer;
       position: absolute;
-
       display: flex;
       align-items: center;
       justify-content: center;
@@ -66,7 +66,6 @@
       white-space: nowrap;
     }
 
-    /* YES ON TOP */
     #yesBtn {
       background: #ff4d6d;
       color: white;
@@ -77,7 +76,6 @@
       transition: transform 0.25s ease;
     }
 
-    /* NO BELOW */
     #noBtn {
       background: #adb5bd;
       color: white;
@@ -86,12 +84,29 @@
       transform: translateX(-50%);
       z-index: 1;
     }
+
+    /* 💕 Falling hearts */
+    .heart {
+      position: fixed;
+      top: -20px;
+      font-size: 24px;
+      animation: fall linear forwards;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <div class="container" id="card">
     <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="cute">
 
     <h1>Will you be my Valentine? 💘</h1>
@@ -108,7 +123,9 @@
     const box = document.querySelector(".buttons");
 
     let scale = 1;
-    let noMessages = [
+    let count = 0;
+
+    const noMessages = [
       "Are you sure?",
       "Think again 😏",
       "Wrong button 😌",
@@ -118,14 +135,13 @@
       "You know you want to 😌",
       "Final warning ⚠️"
     ];
-    let count = 0;
 
     function moveNo() {
       const maxX = box.clientWidth - noBtn.offsetWidth;
       const maxY = box.clientHeight - noBtn.offsetHeight - 40;
 
       const x = Math.random() * maxX;
-      const y = Math.random() * maxY + 60; // keeps it below YES
+      const y = Math.random() * maxY + 60;
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
@@ -141,31 +157,54 @@
     noBtn.addEventListener("mouseover", moveNo);
     noBtn.addEventListener("click", moveNo);
 
+    // 💖 Create falling hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "💖";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5000);
+    }
+
     yesBtn.addEventListener("click", () => {
-      document.body.innerHTML = `
-        <div style="
-          height:100vh;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          text-align:center;
-          font-family:'Poppins', sans-serif;
-          background:linear-gradient(135deg,#ffd6e0,#ffeef2);
-        ">
-          <div>
-            <h1>YAYYYYY 😍💖</h1>
-            <p style="font-size:18px">
-              You chose wisely 😌<br>
-              Valentine officially secured 💘
-            </p>
-            <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="260">
+      document.getElementById("card").style.display = "none";
+
+      // Start hearts rain
+      const heartInterval = setInterval(createHeart, 200);
+
+      setTimeout(() => clearInterval(heartInterval), 5000);
+
+      setTimeout(() => {
+        document.body.innerHTML += `
+          <div style="
+            position:fixed;
+            inset:0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            font-family:'Poppins', sans-serif;
+            z-index:3;
+          ">
+            <div>
+              <h1>YAYYYYY 😍💖</h1>
+              <p style="font-size:18px">
+                Valentine officially secured 💘
+              </p>
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      }, 800);
     });
   </script>
 
 </body>
 </html>
+
 
 
