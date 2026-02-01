@@ -45,7 +45,7 @@
 
     .buttons {
       position: relative;
-      height: 170px;
+      height: 200px;
       width: 100%;
       margin-top: 10px;
     }
@@ -59,29 +59,29 @@
       cursor: pointer;
       position: absolute;
 
-      /* IMPORTANT FIX */
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       white-space: nowrap;
-      transform-origin: center;
     }
 
+    /* YES ON TOP */
     #yesBtn {
       background: #ff4d6d;
       color: white;
+      top: 10px;
       left: 50%;
-      bottom: 10px;
       transform: translateX(-50%) scale(1);
       z-index: 2;
       transition: transform 0.25s ease;
     }
 
+    /* NO BELOW */
     #noBtn {
       background: #adb5bd;
       color: white;
-      top: 20px;
+      top: 90px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1;
@@ -97,8 +97,8 @@
     <h1>Will you be my Valentine? 💘</h1>
 
     <div class="buttons">
-      <button id="noBtn">No 😒</button>
       <button id="yesBtn">Yes 💕</button>
+      <button id="noBtn">No 😒</button>
     </div>
   </div>
 
@@ -122,10 +122,10 @@
 
     function moveNo() {
       const maxX = box.clientWidth - noBtn.offsetWidth;
-      const maxY = box.clientHeight - noBtn.offsetHeight - 80;
+      const maxY = box.clientHeight - noBtn.offsetHeight - 40;
 
       const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+      const y = Math.random() * maxY + 60; // keeps it below YES
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
@@ -167,4 +167,5 @@
 
 </body>
 </html>
+
 
